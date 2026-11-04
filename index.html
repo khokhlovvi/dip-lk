@@ -377,7 +377,6 @@ function score(c, m) {
   s += { "подписан": 40, "на согласовании": 15 }[f.agreement] || 0;
   s += { "сразу": 15, "под сделку": 8 }[f.readiness] || 0;
   s += { "есть сделка": 20, "договор подписан": 10, "переговоры": 8, "первый контакт": 5 }[f.stage] || 0;
-  s += Math.min(20, (num(f.our_deals) || 0) * 5);
   return { c, yes, no, unk, s };
 }
 function matchView() {
@@ -466,7 +465,7 @@ function cardView() {
       ${area("Портрет клиента", c.sections["Портрет клиента"])}
     </div>
     <h3>Для агента</h3><div class="form">
-      <div class="field grid2">${inp("av", "Вознаграждение, %", f.av, 'inputmode="decimal"')}${inp("our_deals", "Наших сделок", f.our_deals, 'inputmode="numeric"')}</div>
+      <div class="field">${inp("av", "Вознаграждение, %", f.av, 'inputmode="decimal"')}</div>
       <div class="field grid2">${inp("agent_page", "Страница для агентов", f.agent_page)}${inp("inn", "ИНН", f.inn, 'inputmode="numeric"')}</div>
       ${area("Условия для агента", c.sections["Условия для агента"])}
       ${area("Контакты", c.sections["Контакты"], 2)}
