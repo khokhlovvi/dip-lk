@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Лизинговые компании — Деньги и Право</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+:root {
+  --bg: #f2f2f7; --card: #ffffff; --text: #1d1d1f; --hint: #6e6e73; --line: rgba(60,60,67,.14);
+  --accent: #0071e3; --accent-text: #ffffff; --ok: #248a3d; --warn: #b25000; --bad: #c9302c; --field: #f2f2f7;
+  --radius: 14px; --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #000; --card: #1c1c1e; --text: #f5f5f7; --hint: #98989d; --line: rgba(84,84,88,.5);
+    --accent: #0a84ff; --ok: #30d158; --warn: #ff9f0a; --bad: #ff453a; --field: #2c2c2e; }
+}
+:root[data-theme="dark"] { --bg: #000; --card: #1c1c1e; --text: #f5f5f7; --hint: #98989d; --line: rgba(84,84,88,.5);
+  --accent: #0a84ff; --ok: #30d158; --warn: #ff9f0a; --bad: #ff453a; --field: #2c2c2e; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.4 var(--font); -webkit-text-size-adjust: 100%; }
+body { padding: env(safe-area-inset-top) env(safe-area-inset-right) calc(env(safe-area-inset-bottom) + 24px) env(safe-area-inset-left); }
+.wrap { max-width: 760px; margin: 0 auto; padding: 16px; }
+h1 { font-size: 28px; line-height: 1.15; font-weight: 700; letter-spacing: -.02em; margin: 8px 0 4px; }
+h2 { font-size: 20px; font-weight: 600; margin: 28px 0 8px; letter-spacing: -.01em; }
+h3 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--hint); margin: 24px 4px 8px; }
+p { margin: 0 0 8px; }
+.hint { color: var(--hint); font-size: 15px; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent); outline-offset: 2px; }
+
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 16px 0 12px; }
+.stat { background: var(--card); border-radius: var(--radius); padding: 12px; }
+.stat b { display: block; font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 13px; color: var(--hint); }
+@media (max-width: 480px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+.seg { display: flex; background: var(--field); border-radius: 10px; padding: 3px; gap: 2px; position: sticky; top: 0; z-index: 5; margin: 0 -2px; }
+.seg button { flex: 1; min-height: 40px; border: 0; background: transparent; border-radius: 8px; font-size: 15px; font-weight: 500; cursor: pointer; color: var(--text); }
+.seg button[aria-selected="true"] { background: var(--card); box-shadow: 0 1px 3px rgba(0,0,0,.12); font-weight: 600; }
+
+.group { background: var(--card); border-radius: var(--radius); overflow: hidden; }
+.row { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 10px 16px; border: 0; background: none; width: 100%; text-align: left; cursor: pointer; }
+.row + .row { border-top: 1px solid var(--line); }
+.row:hover { background: color-mix(in srgb, var(--text) 4%, transparent); }
+.row .main { flex: 1; min-width: 0; }
+.row .title { font-weight: 500; }
+.row .sub { font-size: 14px; color: var(--hint); }
+.row .chev { color: var(--hint); font-size: 20px; }
+.badge { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--field); color: var(--hint); white-space: nowrap; }
+.badge.ok { background: color-mix(in srgb, var(--ok) 16%, transparent); color: var(--ok); }
+.badge.warn { background: color-mix(in srgb, var(--warn) 16%, transparent); color: var(--warn); }
+.badge.acc { background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); }
+
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.filters input[type=search] { flex: 1 1 100%; }
+.filters select { flex: 1 1 140px; }
+input[type=text], input[type=search], input[type=date], select, textarea {
+  width: 100%; min-height: 44px; border: 1px solid transparent; background: var(--field); border-radius: 10px; padding: 10px 12px; }
+textarea { min-height: 88px; resize: vertical; line-height: 1.4; }
+.chip { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); cursor: pointer; font-size: 15px; }
+.chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.form { background: var(--card); border-radius: var(--radius); padding: 4px 16px; }
+.field { padding: 12px 0; }
+.field + .field { border-top: 1px solid var(--line); }
+.field label, .field .lbl { display: block; font-size: 13px; color: var(--hint); margin-bottom: 6px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 340px) { .grid2 { grid-template-columns: 1fr; } }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px; border-radius: 12px; border: 0; background: var(--accent); color: var(--accent-text); font-weight: 600; cursor: pointer; }
+.btn.secondary { background: var(--field); color: var(--accent); }
+.btn:disabled { opacity: .45; cursor: default; }
+.btn.wide { width: 100%; }
+.bar { position: sticky; bottom: 0; padding: 12px 0 calc(env(safe-area-inset-bottom) + 8px); background: linear-gradient(transparent, var(--bg) 30%); }
+.back { border: 0; background: none; color: var(--accent); font-size: 17px; padding: 8px 0; min-height: 44px; cursor: pointer; }
+.links { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 4px 0 0; font-size: 15px; }
+
+.hist { padding: 12px 0; }
+.hist + .hist { border-top: 1px solid var(--line); }
+.hist .when { font-size: 13px; color: var(--hint); }
+.hist .txt { white-space: pre-wrap; }
+.check { display: flex; align-items: center; gap: 10px; min-height: 44px; }
+.check input { width: 22px; height: 22px; accent-color: var(--accent); }
+
+.task { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; cursor: pointer; }
+.task + .task { border-top: 1px solid var(--line); }
+.task input { width: 22px; height: 22px; margin-top: 1px; flex: none; accent-color: var(--accent); }
+.task.done .t { color: var(--hint); text-decoration: line-through; }
+
+.res { padding: 14px 16px; }
+.res + .res { border-top: 1px solid var(--line); }
+.res .head { display: flex; align-items: baseline; gap: 8px; justify-content: space-between; }
+.res ul { margin: 6px 0 0; padding: 0; list-style: none; font-size: 15px; }
+.res li::before { content: attr(data-m); display: inline-block; width: 1.4em; }
+.res li.y { color: var(--ok); } .res li.n { color: var(--bad); } .res li.q { color: var(--hint); }
+
+.note { background: color-mix(in srgb, var(--accent) 9%, var(--card)); border-radius: var(--radius); padding: 12px 16px; font-size: 15px; margin: 12px 0; }
+.empty { text-align: center; padding: 48px 16px; color: var(--hint); }
+.toast { position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom) + 24px); transform: translateX(-50%); background: var(--text); color: var(--bg); padding: 10px 18px; border-radius: 999px; font-size: 15px; opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 20; max-width: 90vw; }
+.toast.show { opacity: 1; }
+.toast.err { background: var(--bad); color: #fff; }
+details summary { cursor: pointer; color: var(--accent); min-height: 44px; display: flex; align-items: center; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"><div class="empty">Загружаю…</div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+"use strict";
+const API = "https://dengiipravo.ru/lk-api";
+const tg = window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData ? window.Telegram.WebApp : null;
+const LK_SECTIONS = ["Что финансирует", "Портрет клиента", "Условия для агента", "Контакты"];
+const BR_SECTIONS = ["Объекты и клиенты", "Что ему нужно от нас", "Условия", "Контакты"];
+let D = null, tab = "lk", view = null, dirty = false, q = { text: "", readiness: "", stage: "", realty: false };
+let match = { asset: "недвижимость", region: "", sum: "", advance: "", term: "", age: "" };
+
+// --- доступ ---
+(function auth() {
+  const m = location.hash.match(/k=([A-Za-z0-9_-]+)/);
+  if (m) { localStorage.setItem("dip-lk-key", m[1]); history.replaceState(null, "", location.pathname + location.search); }
+})();
+function headers() {
+  const h = { "Content-Type": "application/json" };
+  if (tg) h["X-Telegram-Init-Data"] = tg.initData;
+  else if (localStorage.getItem("dip-lk-key")) h["Authorization"] = "Key " + localStorage.getItem("dip-lk-key");
+  return h;
+}
+async function api(path, body) {
+  const r = await fetch(API + path, body ? { method: "POST", headers: headers(), body: JSON.stringify(body) } : { headers: headers() });
+  let j = {}; try { j = await r.json(); } catch (e) {}
+  if (!r.ok) { const e = new Error(j.error || "Сервер не ответил (" + r.status + ")"); e.status = r.status; throw e; }
+  return j;
+}
+
+// --- помощники ---
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const plain = s => String(s || "").replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, "$2").replace(/\[\[([^\]]+)\]\]/g, "$1").replace(/\s*#уточнить/g, "").replace(/`/g, "");
+const num = v => { const x = parseFloat(String(v == null ? "" : v).replace(",", ".").replace(/\s/g, "")); return isNaN(x) ? null : x; };
+const fmtDate = s => s ? s.split("-").reverse().join(".") : "";
+const safeUrl = u => /^https?:\/\//i.test(u || "") ? u : "";
+function toast(msg, err) {
+  const t = $("#toast"); t.textContent = msg; t.className = "toast show" + (err ? " err" : "");
+  clearTimeout(toast.t); toast.t = setTimeout(() => t.className = "toast", 2600);
+}
+function opts(list, val, empty) {
+  return (empty !== undefined ? `<option value="">${esc(empty)}</option>` : "") +
+    list.map(x => `<option${x === val ? " selected" : ""}>${esc(x)}</option>`).join("");
+}
+const filled = c => c.fields.stage !== "не связывались" || (c.fields.assets || []).length || (c.fields.realty && c.fields.realty !== "неизвестно") || c.history.some(h => h.who && h.who !== "Claude");
+const tone = c => c.fields.agreement === "подписан" ? "ok" : c.fields.readiness === "сразу" ? "acc" : c.fields.readiness === "под сделку" ? "warn" : "";
+
+// --- тема Telegram ---
+function theme() {
+  if (!tg) return;
+  const p = tg.themeParams || {}, r = document.documentElement.style;
+  document.documentElement.dataset.theme = tg.colorScheme === "dark" ? "dark" : "light";
+  if (p.secondary_bg_color) r.setProperty("--bg", p.secondary_bg_color);
+  if (p.bg_color) r.setProperty("--card", p.bg_color);
+  if (p.text_color) r.setProperty("--text", p.text_color);
+  if (p.hint_color) r.setProperty("--hint", p.hint_color);
+  if (p.button_color) r.setProperty("--accent", p.button_color);
+  if (p.button_text_color) r.setProperty("--accent-text", p.button_text_color);
+}
+
+// --- экраны ---
+function render() {
+  const app = $("#app");
+  if (tg) { view ? tg.BackButton.show() : tg.BackButton.hide(); }
+  if (view) { app.innerHTML = view.kind === "newbroker" ? newBrokerView() : cardView(); bindCard(); return; }
+  const lk = D.lk, signed = lk.filter(c => c.fields.agreement === "подписан").length;
+  app.innerHTML = `
+    <h1>Лизинговые компании</h1>
+    <p class="hint">Направление «Лизинг и коммерческая недвижимость» · ${esc(D.me)}</p>
+    <div class="stats">
+      <div class="stat"><b>${lk.length}</b><span>в списке</span></div>
+      <div class="stat"><b>${lk.filter(filled).length}</b><span>изучено</span></div>
+      <div class="stat"><b>${lk.filter(c => ["первый контакт", "переговоры", "договор подписан", "есть сделка"].includes(c.fields.stage)).length}</b><span>на связи</span></div>
+      <div class="stat"><b>${signed}</b><span>договоров</span></div>
+    </div>
+    <div class="seg" role="tablist">
+      ${[["lk", "Компании"], ["match", "Подбор"], ["br", "Брокеры"], ["plan", "План"]].map(([k, t]) =>
+        `<button role="tab" aria-selected="${tab === k}" data-tab="${k}">${t}</button>`).join("")}
+    </div>
+    <div id="tab">${tab === "lk" ? listView() : tab === "match" ? matchView() : tab === "br" ? brokersView() : planView()}</div>`;
+  app.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); });
+  bindTab();
+}
+
+function listView() {
+  const t = q.text.trim().toLowerCase();
+  const rows = D.lk.slice().sort((a, b) => a.name.localeCompare(b.name, "ru")).filter(c => (!t || c.name.toLowerCase().includes(t)) && (!q.readiness || c.fields.readiness === q.readiness) &&
+    (!q.stage || c.fields.stage === q.stage) && (!q.realty || c.fields.realty === "да"));
+  return `
+    <div class="filters">
+      <input type="search" id="f-text" placeholder="Поиск по названию" value="${esc(q.text)}" aria-label="Поиск по названию">
+      <select id="f-ready" aria-label="Группа">${opts(D.vocab.readiness, q.readiness, "Все группы")}</select>
+      <select id="f-stage" aria-label="Этап">${opts(D.vocab.stage, q.stage, "Все этапы")}</select>
+      <button class="chip" id="f-realty" aria-pressed="${q.realty}">Берут недвижимость</button>
+    </div>
+    <div class="group">${rows.length ? rows.map(c => `
+      <button class="row" data-open="lk:${esc(c.file)}">
+        <div class="main"><div class="title">${esc(c.name)}</div>
+          <div class="sub">${esc(c.fields.readiness)} · ${esc(c.fields.stage)}${c.fields.av ? " · АВ " + esc(c.fields.av) + " %" : ""}${c.fields.last_contact ? " · " + fmtDate(c.fields.last_contact) : ""}</div></div>
+        ${c.fields.agreement === "подписан" ? '<span class="badge ok">договор</span>' : c.fields.agreement === "на согласовании" ? '<span class="badge warn">договор на согласовании</span>' : ""}
+        <span class="chev" aria-hidden="true">›</span>
+      </button>`).join("") : '<div class="empty">Ничего не нашлось</div>'}</div>
+    <p class="hint" style="margin-top:12px">Найдено ${rows.length} из ${D.lk.length}. Группы: «сразу» — подписывают с любым, «под сделку» — ждут клиента, «не наш профиль» — не финансируют то, что нам нужно</p>`;
+}
+
+function brokersView() {
+  return `
+    <h2>Брокеры коммерческой недвижимости</h2>
+    <div class="group">${D.brokers.length ? D.brokers.map(c => `
+      <button class="row" data-open="broker:${esc(c.file)}">
+        <div class="main"><div class="title">${esc(c.name)}</div>
+          <div class="sub">${esc([c.fields.city, c.fields.segment, c.fields.stage].filter(Boolean).join(" · "))}${c.fields.last_contact ? " · " + fmtDate(c.fields.last_contact) : ""}</div></div>
+        <span class="chev" aria-hidden="true">›</span>
+      </button>`).join("") : '<div class="empty">Пока никого. Добавьте первого брокера, когда появится контакт</div>'}</div>
+    <div style="margin-top:16px"><button class="btn wide" id="add-broker">Добавить брокера</button></div>`;
+}
+
+function planView() {
+  const stages = [...new Set(D.roadmap.map(t => t.stage))];
+  const done = D.roadmap.filter(t => t.done).length;
+  return `
+    <h2>Дорожная карта</h2>
+    <p class="hint">Сделано ${done} из ${D.roadmap.length}. Отметка ставится и в заметке «Дорожная карта Адама»</p>
+    ${stages.map(s => `<h3>${esc(s)}</h3><div class="group">${D.roadmap.filter(t => t.stage === s).map(t => `
+      <label class="task${t.done ? " done" : ""}"><input type="checkbox" data-task="${t.key}"${t.done ? " checked" : ""}><span class="t">${esc(plain(t.text))}</span></label>`).join("")}</div>`).join("")}`;
+}
+
+// --- подбор ---
+function score(c, m) {
+  const f = c.fields, yes = [], no = [], unk = [];
+  if (f.readiness === "не наш профиль") no.push("не наш профиль");
+  const assets = f.assets || [];
+  if (m.asset) {
+    if (assets.length) (assets.includes(m.asset) ? yes : no).push(assets.includes(m.asset) ? "финансирует: " + m.asset : "не финансирует: " + m.asset);
+    else if (m.asset === "недвижимость" && f.realty === "да") yes.push("берёт недвижимость");
+    else if (m.asset === "недвижимость" && f.realty === "нет") no.push("не берёт недвижимость");
+    else unk.push("неизвестно, финансирует ли " + m.asset);
+  }
+  if (m.region.trim()) {
+    const r = (f.regions || "").toLowerCase(), want = m.region.trim().toLowerCase();
+    if (!r) unk.push("регионы не известны");
+    else if (/вся росси|по всей|рф\b/.test(r) || r.includes(want) || want.includes(r)) yes.push("работает в регионе");
+    else no.push("регионы: " + f.regions);
+  }
+  const range = (val, key, test, okText, badText, unkText) => {
+    const x = num(val); if (x === null) return; const lim = num(f[key]);
+    if (lim === null) unk.push(unkText); else if (test(x, lim)) yes.push(okText(lim)); else no.push(badText(lim));
+  };
+  range(m.sum, "ticket_min", (x, l) => x >= l, l => "сумма от " + l + " млн", l => "минимальная сумма " + l + " млн", "минимальная сумма не известна");
+  range(m.sum, "ticket_max", (x, l) => x <= l, l => "сумма до " + l + " млн", l => "максимальная сумма " + l + " млн", "максимальная сумма не известна");
+  range(m.advance, "advance_min", (x, l) => x >= l, l => "аванс от " + l + " %", l => "нужен аванс от " + l + " %", "минимальный аванс не известен");
+  range(m.term, "term_max", (x, l) => x <= l, l => "срок до " + l + " мес.", l => "срок не больше " + l + " мес.", "максимальный срок не известен");
+  range(m.age, "age_min", (x, l) => x >= l, l => "бизнес от " + l + " мес.", l => "нужен бизнес от " + l + " мес.", "требование к возрасту бизнеса не известно");
+  let s = yes.length * 6 - unk.length * 3 + (num(f.av) || 0);
+  s += { "подписан": 40, "на согласовании": 15 }[f.agreement] || 0;
+  s += { "сразу": 15, "под сделку": 8 }[f.readiness] || 0;
+  s += { "есть сделка": 20, "договор подписан": 10, "переговоры": 8, "первый контакт": 5 }[f.stage] || 0;
+  s += Math.min(20, (num(f.our_deals) || 0) * 5);
+  return { c, yes, no, unk, s };
+}
+function matchView() {
+  const res = D.lk.map(c => score(c, match)).sort((a, b) => b.s - a.s);
+  const ok = res.filter(r => !r.no.length), bad = res.filter(r => r.no.length);
+  const known = D.lk.filter(filled).length;
+  const item = r => `<div class="res">
+      <div class="head"><a href="#" data-open="lk:${esc(r.c.file)}"><b>${esc(r.c.name)}</b></a>
+        <span>${r.c.fields.agreement === "подписан" ? '<span class="badge ok">договор</span> ' : ""}<span class="badge">${esc(r.c.fields.readiness)}</span></span></div>
+      <ul>${r.yes.map(x => `<li class="y" data-m="✓">${esc(x)}</li>`).join("")}${r.no.map(x => `<li class="n" data-m="✕">${esc(x)}</li>`).join("")}${r.unk.slice(0, 3).map(x => `<li class="q" data-m="?">${esc(x)}</li>`).join("")}${r.unk.length > 3 ? `<li class="q" data-m="">и ещё ${r.unk.length - 3} неизвестных</li>` : ""}</ul>
+    </div>`;
+  return `
+    <h2>Подбор ЛК под клиента</h2>
+    <p class="hint">Отсев по активу, региону, сумме, авансу, сроку и возрасту бизнеса. Выше — ЛК с договором и живым контактом, вознаграждение учитывается последним</p>
+    <div class="form">
+      <div class="field"><label for="m-asset">Что финансируем</label><select id="m-asset">${opts(D.vocab.assets, match.asset, "Любой актив")}</select></div>
+      <div class="field grid2">
+        <div><label for="m-region">Регион</label><input type="text" id="m-region" value="${esc(match.region)}" placeholder="Например, Краснодарский край"></div>
+        <div><label for="m-sum">Сумма, млн ₽</label><input type="text" inputmode="decimal" id="m-sum" value="${esc(match.sum)}"></div>
+      </div>
+      <div class="field grid2">
+        <div><label for="m-adv">Аванс клиента, %</label><input type="text" inputmode="decimal" id="m-adv" value="${esc(match.advance)}"></div>
+        <div><label for="m-term">Срок, мес.</label><input type="text" inputmode="numeric" id="m-term" value="${esc(match.term)}"></div>
+      </div>
+      <div class="field"><label for="m-age">Возраст бизнеса клиента, мес.</label><input type="text" inputmode="numeric" id="m-age" value="${esc(match.age)}"></div>
+    </div>
+    ${known < 10 ? `<div class="note">Изучено карточек: ${known} из ${D.lk.length}. Пока данных мало, поэтому в подборе много «неизвестно». Чем больше Адам заполнит, тем точнее результат</div>` : ""}
+    <h3>Лучшие варианты</h3><div class="group">${ok.slice(0, 3).map(item).join("") || '<div class="empty">Никто не подходит под условия</div>'}</div>
+    ${ok.length > 3 ? `<details><summary>Ещё подходят (${ok.length - 3})</summary><div class="group">${ok.slice(3).map(item).join("")}</div></details>` : ""}
+    ${bad.length ? `<details><summary>Не подходят (${bad.length})</summary><div class="group">${bad.map(item).join("")}</div></details>` : ""}`;
+}
+
+// --- карточка ---
+function current() {
+  const list = view.kind === "lk" ? D.lk : D.brokers;
+  return list.find(c => c.file === view.file);
+}
+function inp(id, label, val, extra = "") {
+  return `<div><label for="c-${id}">${esc(label)}</label><input type="text" id="c-${id}" data-f="${id}" value="${esc(val)}" ${extra}></div>`;
+}
+function sel(id, label, list, val) {
+  return `<div><label for="c-${id}">${esc(label)}</label><select id="c-${id}" data-f="${id}">${opts(list, val, "—")}</select></div>`;
+}
+function area(title, val, rows = 3) {
+  return `<div class="field"><label for="s-${esc(title)}">${esc(title)}</label><textarea id="s-${esc(title)}" data-s="${esc(title)}" rows="${rows}">${esc(val)}</textarea></div>`;
+}
+function cardView() {
+  const c = current(); if (!c) return '<div class="empty">Карточка не найдена</div>';
+  const f = c.fields, isLk = view.kind === "lk", site = safeUrl(f.site), agent = safeUrl(f.agent_page);
+  const top = `<button class="back" id="back">‹ Назад</button>
+    <h1>${esc(c.name)}</h1>
+    <div class="links">${site ? `<a href="${esc(site)}" target="_blank" rel="noopener">Сайт</a>` : ""}${agent ? `<a href="${esc(agent)}" target="_blank" rel="noopener">Страница для агентов</a>` : ""}<span class="hint">${f.last_contact ? "Последний контакт " + fmtDate(f.last_contact) : "Контактов ещё не было"}</span></div>`;
+  const hist = `<h3>История</h3><div class="form">
+      ${c.history.length ? c.history.slice().reverse().map(h => `<div class="hist"><div class="when">${fmtDate(h.date)}${h.who ? " · " + esc(h.who) : ""}</div><div class="txt">${esc(plain(h.text))}</div></div>`).join("") : '<div class="hist hint">Записей нет</div>'}
+    </div>
+    <h3>Новая запись</h3><div class="form">
+      <div class="field"><label for="c-note">Что было: звонок, письмо, встреча, что узнали</label><textarea id="c-note" rows="3" placeholder="Например: звонил менеджеру, недвижимость берут от 30 млн, прислали форму агентского договора"></textarea></div>
+      <div class="field"><label class="check"><input type="checkbox" id="c-contact" checked> Это контакт сегодня, обновить дату</label></div>
+    </div>`;
+  const bar = `<div class="bar"><button class="btn wide" id="save" disabled>Сохранить</button></div>`;
+  if (!isLk) return top + `
+    <h3>Основное</h3><div class="form">
+      <div class="field grid2">${inp("city", "Город", f.city)}${inp("segment", "Объекты", f.segment, 'placeholder="офисы, склады, торговля"')}</div>
+      <div class="field grid2">${sel("stage", "Этап", D.vocab.br_stage, f.stage)}${inp("last_contact", "Последний контакт", f.last_contact, 'placeholder="ГГГГ-ММ-ДД"')}</div>
+      <div class="field">${inp("contact", "Контакт", f.contact)}</div>
+      <div class="field grid2">${inp("site", "Сайт", f.site)}${inp("terms", "Условия, коротко", f.terms)}</div>
+    </div>
+    <h3>Подробно</h3><div class="form">${BR_SECTIONS.map(s => area(s, c.sections[s])).join("")}</div>` + hist + bar;
+  return top + `
+    <h3>Отношения</h3><div class="form">
+      <div class="field grid2">${sel("readiness", "Группа", D.vocab.readiness, f.readiness)}${sel("stage", "Этап", D.vocab.stage, f.stage)}</div>
+      <div class="field grid2">${sel("agreement", "Агентский договор", D.vocab.agreement, f.agreement)}${inp("last_contact", "Последний контакт", f.last_contact, 'placeholder="ГГГГ-ММ-ДД"')}</div>
+      <div class="field">${inp("contact", "Менеджер и контакты", f.contact)}</div>
+    </div>
+    <h3>Что финансирует</h3><div class="form">
+      <div class="field"><span class="lbl">Активы</span><div class="chips">${D.vocab.assets.map(a => `<button class="chip" data-asset="${esc(a)}" aria-pressed="${(f.assets || []).includes(a)}">${esc(a)}</button>`).join("")}</div></div>
+      <div class="field grid2">${sel("realty", "Коммерческая недвижимость", D.vocab.realty, f.realty)}${inp("regions", "Регионы", f.regions, 'placeholder="вся Россия или список"')}</div>
+      ${area("Что финансирует", c.sections["Что финансирует"])}
+    </div>
+    <h3>Условия</h3><div class="form">
+      <div class="field grid2">${inp("ticket_min", "Сумма от, млн ₽", f.ticket_min, 'inputmode="decimal"')}${inp("ticket_max", "Сумма до, млн ₽", f.ticket_max, 'inputmode="decimal"')}</div>
+      <div class="field grid2">${inp("advance_min", "Аванс от, %", f.advance_min, 'inputmode="decimal"')}${inp("term_max", "Срок до, мес.", f.term_max, 'inputmode="numeric"')}</div>
+    </div>
+    <h3>Клиент</h3><div class="form">
+      <div class="field grid2">${inp("age_min", "Возраст бизнеса от, мес.", f.age_min, 'inputmode="numeric"')}${inp("clients", "Портрет клиента, коротко", f.clients)}</div>
+      ${area("Портрет клиента", c.sections["Портрет клиента"])}
+    </div>
+    <h3>Для агента</h3><div class="form">
+      <div class="field grid2">${inp("av", "Вознаграждение, %", f.av, 'inputmode="decimal"')}${inp("our_deals", "Наших сделок", f.our_deals, 'inputmode="numeric"')}</div>
+      <div class="field grid2">${inp("agent_page", "Страница для агентов", f.agent_page)}${inp("inn", "ИНН", f.inn, 'inputmode="numeric"')}</div>
+      ${area("Условия для агента", c.sections["Условия для агента"])}
+      ${area("Контакты", c.sections["Контакты"], 2)}
+    </div>` + hist + bar;
+}
+function newBrokerView() {
+  return `<button class="back" id="back">‹ Назад</button><h1>Новый брокер</h1>
+    <div class="form">
+      <div class="field">${inp("name", "Название или имя", "")}</div>
+      <div class="field grid2">${inp("city", "Город", "")}${inp("segment", "Объекты", "", 'placeholder="офисы, склады, торговля"')}</div>
+      <div class="field">${inp("contact", "Контакт", "")}</div>
+    </div>
+    <div class="bar"><button class="btn wide" id="create">Создать карточку</button></div>`;
+}
+
+// --- события ---
+function bindTab() {
+  const on = (id, ev, fn) => { const el = $(id); if (el) el[ev] = fn; };
+  on("#f-text", "oninput", e => { q.text = e.target.value; const pos = e.target.selectionStart; render(); const el = $("#f-text"); el.focus(); el.setSelectionRange(pos, pos); });
+  on("#f-ready", "onchange", e => { q.readiness = e.target.value; render(); });
+  on("#f-stage", "onchange", e => { q.stage = e.target.value; render(); });
+  on("#f-realty", "onclick", () => { q.realty = !q.realty; render(); });
+  on("#add-broker", "onclick", () => { view = { kind: "newbroker" }; render(); scrollTo(0, 0); });
+  const mm = { "#m-asset": "asset", "#m-region": "region", "#m-sum": "sum", "#m-adv": "advance", "#m-term": "term", "#m-age": "age" };
+  Object.entries(mm).forEach(([id, k]) => on(id, "onchange", e => { match[k] = e.target.value; render(); }));
+  document.querySelectorAll("[data-open]").forEach(el => el.onclick = e => { e.preventDefault(); const [kind, file] = el.dataset.open.split(/:(.*)/s); view = { kind, file }; dirty = false; render(); scrollTo(0, 0); });
+  document.querySelectorAll("[data-task]").forEach(el => el.onchange = async () => {
+    el.disabled = true;
+    try { const r = await api("/roadmap", { key: el.dataset.task, done: el.checked }); D = r.data; toast(el.checked ? "Отмечено" : "Снято"); }
+    catch (e) { el.checked = !el.checked; toast(e.message, true); }
+    render();
+  });
+}
+function goBack() {
+  if (dirty && !confirm("Есть несохранённые правки. Выйти без сохранения?")) return;
+  view = null; dirty = false; render();
+}
+function bindCard() {
+  $("#back") && ($("#back").onclick = goBack);
+  if (view.kind === "newbroker") {
+    $("#create").onclick = async () => {
+      const name = $("#c-name").value.trim(); if (!name) return toast("Укажите название", true);
+      const fields = {}; ["city", "segment", "contact"].forEach(k => { const v = $("#c-" + k).value.trim(); if (v) fields[k] = v; });
+      $("#create").disabled = true;
+      try { const r = await api("/broker", { name, fields }); D = r.data; view = { kind: "broker", file: r.changed.replace(/^новый брокер /, "") }; toast("Карточка создана"); render(); }
+      catch (e) { toast(e.message, true); $("#create").disabled = false; }
+    };
+    return;
+  }
+  const c = current(); if (!c) return;
+  const save = $("#save"), mark = () => { dirty = true; save.disabled = false; };
+  document.querySelectorAll("[data-f], [data-s], #c-note").forEach(el => el.addEventListener("input", mark));
+  document.querySelectorAll("select[data-f]").forEach(el => el.addEventListener("change", mark));
+  document.querySelectorAll("[data-asset]").forEach(b => b.onclick = () => { b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") !== "true"); mark(); });
+  save.onclick = async () => {
+    const fields = {}, sections = {};
+    document.querySelectorAll("[data-f]").forEach(el => { const k = el.dataset.f, v = el.value.trim(); if (v !== String(c.fields[k] == null ? "" : c.fields[k])) fields[k] = v; });
+    if (view.kind === "lk") {
+      const a = [...document.querySelectorAll("[data-asset]")].filter(b => b.getAttribute("aria-pressed") === "true").map(b => b.dataset.asset);
+      if (a.join("|") !== (c.fields.assets || []).join("|")) fields.assets = a;
+    }
+    document.querySelectorAll("[data-s]").forEach(el => { const v = el.value.trim(); if (v !== (c.sections[el.dataset.s] || "").trim()) sections[el.dataset.s] = v; });
+    const note = $("#c-note").value.trim();
+    const contact = !!note && $("#c-contact").checked && !("last_contact" in fields);
+    save.disabled = true; save.textContent = "Сохраняю…";
+    try {
+      const r = await api("/card", { kind: view.kind, file: c.file, fields, sections, note, contact });
+      D = r.data; dirty = false; toast(r.changed ? "Сохранено" : "Нечего сохранять"); render();
+    } catch (e) { toast(e.message, true); save.disabled = false; save.textContent = "Сохранить"; }
+  };
+}
+
+// --- запуск ---
+async function start() {
+  if (tg) { tg.ready(); tg.expand(); theme(); tg.onEvent("themeChanged", () => { theme(); }); tg.BackButton.onClick(goBack); }
+  if (!tg && !localStorage.getItem("dip-lk-key")) {
+    $("#app").innerHTML = `<div class="empty"><h1>Лизинговые компании</h1><p>Инструмент для участников «Деньги и Право». Откройте его из бота @DIP_knowledge_base_bot командой /lk: там кнопка и личная ссылка</p></div>`;
+    return;
+  }
+  try { D = await api("/data"); render(); }
+  catch (e) {
+    if (e.status === 401) localStorage.removeItem("dip-lk-key");
+    $("#app").innerHTML = `<div class="empty"><h1>Лизинговые компании</h1><p>${esc(e.message)}</p>${e.status === 401 ? "<p>Получите новую ссылку в боте @DIP_knowledge_base_bot командой /lk</p>" : '<p><button class="btn secondary" onclick="location.reload()">Повторить</button></p>'}</div>`;
+  }
+}
+addEventListener("beforeunload", e => { if (dirty) { e.preventDefault(); e.returnValue = ""; } });
+start();
+</script>
+</body>
+</html>
