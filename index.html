@@ -312,7 +312,7 @@ function strategyView() {
     return `<div class="goal"><div class="gl"><span>${esc(label)}</span><b>${v}${n ? " из " + n : ""}</b></div><div class="pb" role="progressbar" aria-valuenow="${v}" aria-valuemax="${n || 0}" aria-label="${esc(label)}"><i style="width:${pct}%"></i></div></div>`;
   };
   const parts = S.markdown.split(/^## (.+)$/m);
-  let html = `<h2>Цели на год</h2><div class="form">
+  let html = `<h2>${S.goals.date ? "Цели до " + fmtDate(S.goals.date) : "Цели на год"}</h2><div class="form">
       ${bar("Институтов с агентским договором", signed, S.goals.institutions)}
       ${bar("Брокеров, для которых мы агент первого выбора", first, S.goals.brokers)}
       ${bar("Лизинговых компаний изучено", D.lk.filter(filled).length, D.lk.length)}
