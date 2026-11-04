@@ -11,13 +11,15 @@
 :root {
   --bg: #f2f2f7; --card: #ffffff; --text: #1d1d1f; --hint: #6e6e73; --line: rgba(60,60,67,.14);
   --accent: #0071e3; --accent-text: #ffffff; --ok: #248a3d; --warn: #b25000; --bad: #c9302c; --field: #f2f2f7;
+  --sky1: #dbeafe; --sky2: #f5f9ff; --sun: #ffb340; --cloud: rgba(255,255,255,.9); --m1: #b9cde6; --m2: #7f9cc0; --snow: #ffffff;
+  --trail: rgba(29,29,31,.45); --pole: #3a3a3c; --halo: rgba(255,255,255,.85);
   --radius: 14px; --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) { --bg: #000; --card: #1c1c1e; --text: #f5f5f7; --hint: #98989d; --line: rgba(84,84,88,.5);
+  :root:not([data-theme="light"]) { --sky1: #0b1a33; --sky2: #1c1c1e; --sun: #ffd27a; --cloud: rgba(255,255,255,.1); --m1: #23344f; --m2: #34507a; --snow: #dfe8f5; --trail: rgba(255,255,255,.5); --pole: #d1d1d6; --halo: rgba(0,0,0,.6); --bg: #000; --card: #1c1c1e; --text: #f5f5f7; --hint: #98989d; --line: rgba(84,84,88,.5);
     --accent: #0a84ff; --ok: #30d158; --warn: #ff9f0a; --bad: #ff453a; --field: #2c2c2e; }
 }
-:root[data-theme="dark"] { --bg: #000; --card: #1c1c1e; --text: #f5f5f7; --hint: #98989d; --line: rgba(84,84,88,.5);
+:root[data-theme="dark"] { --sky1: #0b1a33; --sky2: #1c1c1e; --sun: #ffd27a; --cloud: rgba(255,255,255,.1); --m1: #23344f; --m2: #34507a; --snow: #dfe8f5; --trail: rgba(255,255,255,.5); --pole: #d1d1d6; --halo: rgba(0,0,0,.6); --bg: #000; --card: #1c1c1e; --text: #f5f5f7; --hint: #98989d; --line: rgba(84,84,88,.5);
   --accent: #0a84ff; --ok: #30d158; --warn: #ff9f0a; --bad: #ff453a; --field: #2c2c2e; }
 * { box-sizing: border-box; }
 html, body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.4 var(--font); -webkit-text-size-adjust: 100%; }
@@ -128,6 +130,75 @@ details summary { cursor: pointer; color: var(--accent); min-height: 44px; displ
 .add { margin-top: 8px; }
 .add textarea { margin-bottom: 8px; }
 .add .row2 { display: flex; gap: 8px; }
+.hero { background: var(--card); border-radius: var(--radius); padding: 18px 16px; margin-top: 12px; }
+.eyebrow { font-size: 13px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 6px; }
+.mission { font-size: 20px; line-height: 1.3; font-weight: 600; letter-spacing: -.01em; margin: 0 0 12px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: 13px; padding: 4px 10px; border-radius: 999px; background: var(--field); color: var(--text); }
+.timeline { padding: 8px 16px; }
+.ms { display: flex; gap: 12px; padding: 12px 0; position: relative; }
+.ms .dot { flex: none; width: 14px; height: 14px; margin-top: 4px; border-radius: 50%; border: 2px solid var(--accent); background: var(--card); }
+.ms.next .dot { background: var(--accent); }
+.ms.past .dot { border-color: var(--hint); background: var(--hint); }
+.ms-b { flex: 1; min-width: 0; }
+.ms-d { font-size: 13px; color: var(--hint); }
+.ms-t { font-weight: 600; margin: 2px 0 4px; }
+.ms .goal { padding: 6px 0; } .ms .goal + .goal { border-top: 0; }
+.today { display: flex; align-items: center; gap: 8px; color: var(--accent); font-size: 13px; font-weight: 600; margin: 4px 0; }
+.today::before, .today::after { content: ""; flex: 1; height: 1px; background: color-mix(in srgb, var(--accent) 45%, transparent); }
+.flow { display: grid; grid-template-columns: 1fr; gap: 0; }
+.node { background: var(--card); border-radius: var(--radius); padding: 14px 16px; }
+.node.mid { background: color-mix(in srgb, var(--accent) 10%, var(--card)); }
+.nt { font-weight: 700; margin-bottom: 6px; }
+.node ul { list-style: none; margin: 0; padding: 0; font-size: 15px; }
+.node li { padding: 5px 0; }
+.node li + li { border-top: 1px solid var(--line); }
+.arr { height: 22px; display: flex; justify-content: center; }
+.arr::before { content: "↓"; color: var(--hint); font-size: 18px; line-height: 22px; }
+@media (min-width: 700px) { .flow { grid-template-columns: 1fr 24px 1fr 24px 1fr; align-items: stretch; } .arr { height: auto; align-items: center; } .arr::before { content: "→"; } }
+.pillar { padding: 14px 16px; }
+.pillar + .pillar { border-top: 1px solid var(--line); }
+.ph { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 4px; }
+.pillar .goal { padding: 6px 0; }
+.nx { font-size: 15px; margin-top: 4px; }
+.nx .hint { font-size: 13px; }
+.linkbtn { border: 0; background: none; color: var(--accent); padding: 8px 0 0; min-height: 36px; cursor: pointer; font-size: 15px; }
+.item { display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--line); }
+.item .task { flex: 1; padding: 12px 0; }
+.item .it { flex: 1; padding: 12px 0; font-size: 15px; }
+.x { flex: none; width: 36px; height: 36px; border: 0; background: none; color: var(--hint); font-size: 22px; cursor: pointer; border-radius: 8px; }
+.x:hover { background: var(--field); }
+.pad { padding: 12px 0; margin: 0; }
+.addline { display: flex; gap: 8px; padding: 12px 0; }
+.addline input { flex: 1; }
+details.doc { padding: 0 16px; }
+details.doc > summary { font-size: 17px; font-weight: 600; color: var(--text); list-style: none; justify-content: space-between; }
+details.doc > summary::after { content: "›"; color: var(--hint); font-size: 22px; transition: transform .2s; }
+details.doc[open] > summary::after { transform: rotate(90deg); }
+details.doc > summary::-webkit-details-marker { display: none; }
+details.doc[open] { padding-bottom: 16px; }
+details.doc + details.doc { margin-top: 8px; }
+.row2 { display: flex; gap: 8px; margin-top: 10px; }
+.hero { position: relative; overflow: hidden; padding: 0; background: linear-gradient(180deg, var(--sky1), var(--sky2) 70%); }
+.hero-txt { padding: 18px 16px 0; position: relative; z-index: 1; }
+.hero .tag { background: color-mix(in srgb, var(--card) 70%, transparent); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.summit { margin: 12px 0 0; font-size: 15px; font-weight: 600; color: var(--accent); }
+.climb { display: block; width: 100%; height: auto; margin-top: -6px; }
+.climb .sun { fill: var(--sun); } .climb .sun-glow { fill: var(--sun); opacity: .18; }
+.climb .clouds ellipse { fill: var(--cloud); }
+.climb .clouds { animation: drift 60s linear infinite alternate; }
+@keyframes drift { from { transform: translateX(-12px); } to { transform: translateX(24px); } }
+.climb .far { fill: var(--m1); } .climb .mid { fill: var(--m2); } .climb .snow { fill: var(--snow); }
+.climb .trail { fill: none; stroke: var(--trail); stroke-width: 2; stroke-dasharray: 3 4; stroke-linecap: round; }
+.climb .trail-done { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.climb .flag line { stroke: var(--pole); stroke-width: 1.5; }
+.climb .flag path { fill: var(--pole); } .climb .flag.top path { fill: var(--accent); }
+.climb text { font: 600 10px var(--font); fill: var(--text); paint-order: stroke; stroke: var(--halo); stroke-width: 3px; }
+.climb .here circle { fill: var(--accent); stroke: #fff; stroke-width: 2; }
+.climb .here .ring { fill: none; stroke: var(--accent); stroke-width: 2; opacity: .6; transform-box: fill-box; transform-origin: center; animation: pulse 2.4s ease-out infinite; }
+.climb .here text { font-size: 11px; fill: var(--accent); }
+@keyframes pulse { from { transform: scale(.6); opacity: .7; } to { transform: scale(2.2); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .climb .clouds, .climb .here .ring { animation: none; } }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
@@ -302,31 +373,158 @@ function md(src) {
   }
   return out.join("");
 }
+// --- восхождение: вершина = цель, флажки = вехи, «Мы здесь» = реальный ход ---
+function climb(S, progress) {
+  const trail = [[14, 196], [58, 166], [96, 172], [150, 128], [190, 136], [240, 88], [272, 96], [304, 42]];
+  const seg = trail.slice(1).map((p, i) => Math.hypot(p[0] - trail[i][0], p[1] - trail[i][1]));
+  const total = seg.reduce((a, b) => a + b, 0);
+  const at = f => { let d = Math.max(0, Math.min(1, f)) * total;
+    for (let i = 0; i < seg.length; i++) { if (d <= seg[i]) { const t = d / seg[i]; return [trail[i][0] + (trail[i + 1][0] - trail[i][0]) * t, trail[i][1] + (trail[i + 1][1] - trail[i][1]) * t]; } d -= seg[i]; }
+    return trail[trail.length - 1]; };
+  const ms = S.milestones || [], start = new Date(S.start || "2026-11-04"), end = new Date(S.goals.date || (ms.length ? ms[ms.length - 1].date : D.today));
+  const frac = d => (new Date(d) - start) / Math.max(1, end - start);
+  const flags = ms.map((m, i) => { const [x, y] = at(frac(m.date)), last = i === ms.length - 1;
+    return `<g class="flag${last ? " top" : ""}"><line x1="${x}" y1="${y}" x2="${x}" y2="${y - (last ? 26 : 18)}"/><path d="M${x} ${y - (last ? 26 : 18)} l${last ? 16 : 11} ${last ? 5 : 4} l-${last ? 16 : 11} ${last ? 5 : 4}z"/>
+      <text x="${x + (last ? -4 : 3)}" y="${y + 13}" text-anchor="${last ? "end" : "start"}">${fmtDate(m.date).slice(0, 5)}</text></g>`; }).join("");
+  const [mx, my] = at(progress);
+  return `<svg class="climb" viewBox="0 0 360 210" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Восхождение к цели: пройдено ${Math.round(progress * 100)} процентов">
+    <circle class="sun-glow" cx="196" cy="46" r="34"/><circle class="sun" cx="196" cy="46" r="17"/>
+    <g class="clouds"><ellipse cx="44" cy="44" rx="24" ry="6"/><ellipse cx="62" cy="39" rx="14" ry="6"/><ellipse cx="330" cy="20" rx="18" ry="5"/><ellipse cx="344" cy="16" rx="10" ry="4"/></g>
+    <path class="far" d="M0 210 L0 150 L40 120 L80 140 L130 96 L170 122 L215 84 L250 110 L300 74 L340 100 L360 92 L360 210Z"/>
+    <path class="mid" d="M0 210 L0 178 L50 150 L90 162 L140 118 L185 132 L230 98 L262 112 L304 42 L336 84 L360 76 L360 210Z"/>
+    <path class="snow" d="M304 42 L292 62 L300 58 L306 66 L314 57 L320 62Z"/>
+    <polyline class="trail" points="${trail.map(p => p.join(",")).join(" ")}"/>
+    <polyline class="trail-done" points="${trailUpTo(trail, at, progress)}"/>
+    ${flags}
+    <g class="here" transform="translate(${mx} ${my})"><circle class="ring" r="9"/><circle r="5.5"/><text x="${mx < 60 ? -6 : mx > 250 ? 6 : 0}" y="-12" text-anchor="${mx < 60 ? "start" : mx > 250 ? "end" : "middle"}">Мы здесь</text></g>
+  </svg>`;
+}
+function trailUpTo(trail, at, f) {
+  const pts = [trail[0]], n = 400;
+  for (let k = 1; k <= n; k++) { if (k / n > f) break; if (k % 8 === 0) pts.push(at(k / n)); }
+  pts.push(at(f));
+  return pts.map(p => p.map(v => v.toFixed(1)).join(",")).join(" ");
+}
+
 function strategyView() {
-  const S = D.strategy;
+  const S = D.strategy, B = D.board;
   if (!S) return '<div class="empty">Заметка со стратегией не найдена</div>';
-  const signed = D.lk.filter(c => c.fields.agreement === "подписан").length;
-  const first = D.brokers.filter(b => b.fields.stage === "агент первого выбора").length;
+  const today = D.today, signed = D.lk.filter(c => c.fields.agreement === "подписан").length;
+  const brStages = D.vocab.br_stage, brAt = st => D.brokers.filter(b => brStages.indexOf(b.fields.stage) >= brStages.indexOf(st)).length;
   const bar = (label, v, goal) => {
     const n = num(goal), pct = n ? Math.min(100, Math.round(v / n * 100)) : 0;
     return `<div class="goal"><div class="gl"><span>${esc(label)}</span><b>${v}${n ? " из " + n : ""}</b></div><div class="pb" role="progressbar" aria-valuenow="${v}" aria-valuemax="${n || 0}" aria-label="${esc(label)}"><i style="width:${pct}%"></i></div></div>`;
   };
-  const parts = S.markdown.split(/^## (.+)$/m);
-  let html = `<h2>${S.goals.date ? "Цели до " + fmtDate(S.goals.date) : "Цели на год"}</h2><div class="form">
-      ${bar("Институтов с агентским договором", signed, S.goals.institutions)}
-      ${bar("Брокеров, для которых мы агент первого выбора", first, S.goals.brokers)}
-      ${bar("Лизинговых компаний изучено", D.lk.filter(filled).length, D.lk.length)}
+  const days = d => Math.round((new Date(d) - new Date(today)) / 864e5);
+  const plural = (n, a, b, c) => { const m = Math.abs(n) % 100, k = m % 10; return m > 10 && m < 20 ? c : k === 1 ? a : k > 1 && k < 5 ? b : c; };
+  const left = d => { const n = days(d); return n > 0 ? `через ${n} ${plural(n, "день", "дня", "дней")}` : n === 0 ? "сегодня" : `${-n} ${plural(-n, "день", "дня", "дней")} назад`; };
+
+  // 1. цель и восхождение
+  const gi = num(S.goals.institutions), gb = num(S.goals.brokers), parts2 = [];
+  if (gi) parts2.push(Math.min(1, signed / gi));
+  if (gb) parts2.push(Math.min(1, brAt("агент первого выбора") / gb));
+  const progress = parts2.length ? parts2.reduce((a, b) => a + b, 0) / parts2.length : 0;
+  const toTop = S.goals.date ? days(S.goals.date) : null;
+  let html = `<div class="hero">
+    <div class="hero-txt"><div class="eyebrow">Цель направления</div><p class="mission">${esc(S.mission || "")}</p>
+    <div class="tags">${(S.roles || []).map(r => `<span class="tag">${esc(r)}</span>`).join("")}</div>
+    <p class="summit">${toTop !== null ? (toTop > 0 ? `До вершины — ${toTop} ${plural(toTop, "день", "дня", "дней")}` : "Срок вершины наступил") : ""} · пройдено ${Math.round(progress * 100)} %</p></div>
+    ${climb(S, progress)}</div>`;
+
+  // 2. вехи
+  const ms = S.milestones || [];
+  let marked = false;
+  html += `<h2>${S.goals.date ? "Вехи до " + fmtDate(S.goals.date) : "Вехи"}</h2><div class="form timeline">` + ms.map(m => {
+    const future = days(m.date) >= 0, now = future && !marked;
+    const mark = now ? `<div class="today"><span>Сегодня, ${fmtDate(today)}</span></div>` : "";
+    if (now) marked = true;
+    return mark + `<div class="ms${future ? "" : " past"}${now ? " next" : ""}"><span class="dot" aria-hidden="true"></span><div class="ms-b">
+      <div class="ms-d">${fmtDate(m.date)} · ${left(m.date)}</div><div class="ms-t">${esc(m.text)}</div>
+      ${m.lk ? bar("Институтов с договором", signed, m.lk) : ""}${m.br ? bar("Брокеров: " + m.br_stage, brAt(m.br_stage), m.br) : ""}</div></div>`;
+  }).join("") + (marked ? "" : `<div class="today"><span>Сегодня, ${fmtDate(today)}</span></div>`) + `</div>`;
+
+  // 3. схема
+  const network = D.brokers.filter(b => b.fields.stage !== "не связывались").length;
+  const li = (text, note, state, go) => `<li>${go ? `<a href="#" data-go="${go}">${esc(text)}</a>` : esc(text)}${note ? ` <span class="hint">${esc(note)}</span>` : ""}${state ? ` <span class="badge ${state === "сейчас" ? "acc" : ""}">${state}</span>` : ""}</li>`;
+  html += `<h2>Как работает направление</h2><div class="flow">
+    <div class="node"><div class="nt">Откуда клиенты</div><ul>
+      ${li("Брокеры коммерческой недвижимости", `${D.brokers.length} в списке, ${network} на связи`, "сейчас", "br")}
+      ${li("Основной бизнес «Деньги и Право»", "", "сейчас")}${li("Нетворкинг Адама", "", "сейчас")}${li("Лидогенерация", "", "позже")}</ul></div>
+    <div class="arr" aria-hidden="true"></div>
+    <div class="node mid"><div class="nt">Деньги и Право · Адам</div><ul>
+      ${li("Подбор ЛК — бесплатно для клиента", "", "", "match")}${li("Проверка объекта и структура сделки")}${li("Кредиты, гарантии, возвратный лизинг")}</ul></div>
+    <div class="arr" aria-hidden="true"></div>
+    <div class="node"><div class="nt">Кто даёт деньги</div><ul>
+      ${li("Лизинговые компании", `договоров ${signed} из ${S.goals.institutions || "?"}`, "сейчас", "lk")}${li("Банки", "", "позже")}${li("Инвесторы", "сделки под ключ", "позже")}</ul></div>
+  </div>`;
+
+  // 4. опоры
+  if (B) {
+    const metric = {
+      "Сеть ЛК": () => bar("Договоров с ЛК", signed, S.goals.institutions),
+      "Профили ЛК и подбор": () => bar("Карточек ЛК изучено", D.lk.filter(filled).length, D.lk.length),
+      "Брокеры и нетворкинг": () => bar("Мы агент первого выбора", brAt("агент первого выбора"), S.goals.brokers),
+    };
+    const tone = s => ({ "в работе": "acc", "на паузе": "warn", "готово": "ok" }[s] || "");
+    html += `<h2>Опоры</h2><p class="hint">Статус и следующий шаг по каждой опоре ведёт Адам</p><div class="group">` + B.pillars.map(p => `
+      <div class="pillar" data-pillar="${esc(p.title)}">
+        <div class="ph"><b>${esc(p.title)}</b><span class="badge ${tone(p.status)}">${esc(p.status || "—")}</span></div>
+        ${metric[p.title] ? metric[p.title]() : ""}
+        <div class="nx"><span class="hint">Следующий шаг</span><div>${esc(p.next || "—")}</div></div>
+        <button class="linkbtn" data-edit-pillar>Изменить</button>
+      </div>`).join("") + `</div>`;
+
+    // 5. слой Адама
+    const listBox = (key, title, hint, ph) => `<h3>${title}</h3><div class="form">
+      ${B[key].length ? B[key].map(it => key === "focus"
+        ? `<div class="item"><label class="task${it.done ? " done" : ""}"><input type="checkbox" data-btoggle="${it.key}"${it.done ? " checked" : ""}><span class="t">${esc(it.text)}</span></label><button class="x" data-bremove="${key}:${it.key}" aria-label="Убрать">×</button></div>`
+        : `<div class="item"><div class="it">${esc(it.text)}</div><button class="x" data-bremove="${key}:${it.key}" aria-label="Убрать">×</button></div>`).join("")
+        : `<p class="hint pad">${hint}</p>`}
+      <div class="addline"><input type="text" data-badd="${key}" placeholder="${esc(ph)}" aria-label="${esc(title)}"><button class="btn small" data-badd-btn="${key}">Добавить</button></div>
     </div>`;
-  if (S.status === "draft") html += `<div class="note">Стратегия пишется: Владимир отвечает на вопросы по блокам, ответы сразу попадают сюда. Под каждым разделом можно дописать своё — кнопка «Дополнить»</div>`;
+    html += `<h2>Пространство Адама</h2><p class="hint">Здесь Адам сам ставит цели, фиксирует решения и копит идеи — без ожидания вводных</p>` +
+      listBox("focus", "Фокус на месяц", "Цели на месяц Адам ставит сам", "Например: разведка 15 ЛК до конца месяца") +
+      listBox("decisions", "Решения", "Решения по направлению, которые Адам принял сам", "Например: начинаю с ЛК группы A") +
+      listBox("ideas", "Идеи и вопросы", "Мысли, гипотезы, вопросы к команде", "Например: одностраничник для брокеров");
+  }
+
+  // 6. основа
+  const parts = S.markdown.split(/^## (.+)$/m);
+  html += `<h2>Основа от Владимира</h2><p class="hint">Решения Владимира по направлению. Раскройте раздел, чтобы прочитать или дополнить</p>`;
   if (parts[0].trim()) html += `<div class="doc md">${md(parts[0])}</div>`;
   for (let k = 1; k < parts.length; k += 2) {
     const t = parts[k].trim();
-    html += `<section class="doc"><h2>${inline(esc(t))}</h2><div class="md">${md(parts[k + 1] || "")}</div>` +
-      (S.sections.includes(t) ? `<div class="add" data-sec="${esc(t)}"><button class="btn secondary small" data-add>Дополнить</button></div>` : "") + `</section>`;
+    html += `<details class="doc"><summary>${inline(esc(t))}</summary><div class="md">${md(parts[k + 1] || "")}</div>` +
+      (S.sections.includes(t) ? `<div class="add" data-sec="${esc(t)}"><button class="btn secondary small" data-add>Дополнить</button></div>` : "") + `</details>`;
   }
   return html;
 }
 function bindStrategy() {
+  document.querySelectorAll("[data-go]").forEach(a => a.onclick = e => { e.preventDefault(); tab = a.dataset.go; render(); scrollTo(0, 0); });
+  const board = async (body, ok) => {
+    try { const r = await api("/board", body); D = r.data; if (ok) toast(ok); render(); }
+    catch (err) { toast(err.message, true); render(); }
+  };
+  document.querySelectorAll("[data-edit-pillar]").forEach(btn => btn.onclick = () => {
+    const box = btn.closest("[data-pillar]"), title = box.dataset.pillar, p = D.board.pillars.find(x => x.title === title);
+    box.innerHTML = `<div class="ph"><b>${esc(title)}</b></div>
+      <label class="hint" for="pl-st">Статус</label><select id="pl-st">${opts(D.board.statuses, p.status)}</select>
+      <label class="hint" for="pl-nx" style="display:block;margin-top:10px">Следующий шаг</label><textarea id="pl-nx" rows="2">${esc(p.next)}</textarea>
+      <div class="row2"><button class="btn small" data-psave>Сохранить</button><button class="btn secondary small" data-pcancel>Отмена</button></div>`;
+    box.querySelector("[data-pcancel]").onclick = () => render();
+    box.querySelector("[data-psave]").onclick = e => { e.target.disabled = true;
+      board({ op: "pillar", title, status: $("#pl-st").value, next: $("#pl-nx").value.trim() }, "Сохранено"); };
+  });
+  document.querySelectorAll("[data-btoggle]").forEach(el => el.onchange = () => { el.disabled = true; board({ op: "toggle", list: "focus", key: el.dataset.btoggle, done: el.checked }); });
+  document.querySelectorAll("[data-bremove]").forEach(el => el.onclick = () => {
+    if (!confirm("Убрать этот пункт?")) return;
+    const [list, key] = el.dataset.bremove.split(":"); board({ op: "remove", list, key }, "Убрано");
+  });
+  document.querySelectorAll("[data-badd-btn]").forEach(btn => {
+    const key = btn.dataset.baddBtn, input = document.querySelector(`[data-badd="${key}"]`);
+    const go = () => { const t = input.value.trim(); if (!t) return input.focus(); btn.disabled = true; board({ op: "add", list: key, text: t }, "Добавлено"); };
+    btn.onclick = go; input.onkeydown = e => { if (e.key === "Enter") go(); };
+  });
   document.querySelectorAll(".add[data-sec]").forEach(box => {
     const btn = box.querySelector("[data-add]");
     if (!btn) return;
